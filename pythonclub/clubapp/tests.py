@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Meeting, MeetingMinutes, Resource, Event
+from .forms import MeetingForm
 
 # Create your tests here.
 class MeetingTest(TestCase):
@@ -34,3 +35,15 @@ class EventTest(TestCase):
 
     def test_table(self):
         self.assertEqual(str(Event._meta.db_table), 'event')
+
+
+#Form tests
+class Meeting_Form_Test(TestCase):
+    def test_meetingform_is_valid(self):
+        form=MeetingForm(data={'meetingtitle': "title1", 'meetingdate' : "2019-05-31", 'location': "scc", 'agenda': "some agenda"})
+        self.assertTrue(form.is_valid())
+
+
+    def test_meetingform_empty(self):
+        form=MeetingForm(data={'meetingtitle': ""})
+        self.assertFalse(form.is_valid())
